@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>家政教甄整理站</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+:root{
+  --paper:#F5EFE3;
+  --paper-deep:#EBE1CC;
+  --card:#FFFDF7;
+  --ink:#2E3733;
+  --ink-soft:#6B7570;
+  --ink-faint:#9B9184;
+  --line:#DCD2BC;
+  --line-strong:#C3B594;
+
+  --accent-family:#B75B3D;   --accent-family-soft:#F0DCCF;
+  --accent-child:#5F8A55;    --accent-child-soft:#E1EAD7;
+  --accent-food:#BE8C2A;     --accent-food-soft:#F3E4C0;
+  --accent-clothing:#7B5877; --accent-clothing-soft:#EADCE8;
+  --accent-teal:#3F7A78;     --accent-teal-soft:#D9E9E7;
+  --accent-slate:#55607A;    --accent-slate-soft:#DEE1EA;
+
+  --good:#4F7A52; --good-soft:#DEEBDD;
+  --bad:#B5482F;  --bad-soft:#F2DCD4;
+  --new:#9B9184;  --new-soft:#E9E3D6;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Noto Sans TC', sans-serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+h1,h2,h3,.serif{ font-family:'Noto Serif TC', serif; }
+
+button{ font-family:inherit; cursor:pointer; }
+input,textarea,select{ font-family:inherit; }
+::selection{ background:var(--accent-food-soft); }
+
+.shell{ display:flex; min-height:100vh; }
+
+/* ---------- Sidebar ---------- */
+.sidebar{
+  width:236px; flex-shrink:0;
+  background:var(--paper-deep);
+  border-right:1px solid var(--line);
+  padding:28px 18px;
+  display:flex; flex-direction:column;
+  position:sticky; top:0; height:100vh;
+}
+.brand{ padding:0 6px 22px 6px; border-bottom:1px dashed var(--line-strong); margin-bottom:20px; }
+.brand-mark{ width:34px; height:34px; margin-bottom:10px; }
+.brand-title{ font-size:19px; font-weight:900; letter-spacing:0.5px; line-height:1.3; }
+.brand-sub{ font-size:12px; color:var(--ink-soft); margin-top:4px; }
+
+.nav{ display:flex; flex-direction:column; gap:4px; }
+.nav-item{
+  display:flex; align-items:center; gap:10px;
+  padding:11px 12px; border-radius:10px;
+  border:none; background:transparent; color:var(--ink-soft);
+  font-size:14.5px; font-weight:500; text-align:left; width:100%;
+  transition:background .15s ease, color .15s ease;
+}
+.nav-item svg{ width:18px; height:18px; flex-shrink:0; }
+.nav-item:hover{ background:rgba(0,0,0,0.04); color:var(--ink); }
+.nav-item.active{ background:var(--card); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,0.06); font-weight:700; }
+.nav-item.active .dot{ background:var(--ink); }
+
+.sidebar-foot{ margin-top:auto; padding-top:16px; border-top:1px dashed var(--line-strong); }
+.mini-stat{ font-size:12px; color:var(--ink-soft); line-height:1.7; }
+.mini-stat b{ color:var(--ink); font-family:'Noto Serif TC',serif; }
+
+/* ---------- Main ---------- */
+.main{ flex:1; min-width:0; padding:36px 44px 60px; }
+.view-header{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:26px; flex-wrap:wrap; }
+.view-title{ font-size:26px; font-weight:900; margin:0 0 6px; }
+.view-desc{ font-size:13.5px; color:var(--ink-soft); margin:0; }
+
+.btn{
+  border:none; border-radius:9px; padding:10px 16px; font-size:13.5px; font-weight:700;
+  display:inline-flex; align-items:center; gap:7px; white-space:nowrap;
+}
+.btn svg{ width:15px; height:15px; }
+.btn-primary{ background:var(--ink); color:var(--paper); }
+.btn-primary:hover{ background:#1f2724; }
+.btn-ghost{ background:transparent; color:var(--ink-soft); border:1px solid var(--line-strong); }
+.btn-ghost:hover{ color:var(--ink); border-color:var(--ink-soft); }
+.btn-soft{ background:var(--card); color:var(--ink); border:1px solid var(--line); }
+.btn-soft:hover{ border-color:var(--line-strong); }
+.btn-danger{ background:transparent; color:var(--bad); border:1px solid var(--bad-soft); }
+.btn-danger:hover{ background:var(--bad-soft); }
+.btn-sm{ padding:6px 11px; font-size:12.5px; border-radius:7px; }
+.btn:disabled{ opacity:0.45; cursor:not-allowed; }
+.icon-btn{ background:transparent; border:none; padding:6px; border-radius:7px; color:var(--ink-soft); display:inline-flex; }
+.icon-btn:hover{ background:rgba(0,0,0,0.05); color:var(--ink); }
+.icon-btn svg{ width:15px; height:15px; }
+
+/* ---------- Dashboard ---------- */
+.stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:28px; }
+.stat-box{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+.stat-box .num{ font-family:'Noto Serif TC',serif; font-size:26px; font-weight:900; }
+.stat-box .lab{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
+
+.domain-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr)); gap:16px; }
+.domain-card{
+  position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:20px 18px 18px; overflow:hidden;
+}
+.domain-tab{
+  position:absolute; top:0; left:22px; width:46px; height:9px; border-radius:0 0 5px 5px;
+}
+.domain-name{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:16.5px; margin:6px 0 14px; padding-right:8px; }
+.seg-bar{ display:flex; height:8px; border-radius:5px; overflow:hidden; background:var(--new-soft); margin-bottom:10px; }
+.seg{ height:100%; }
+.legend{ display:flex; gap:12px; flex-wrap:wrap; font-size:11.5px; color:var(--ink-soft); margin-bottom:14px; }
+.legend span{ display:inline-flex; align-items:center; gap:5px; }
+.legend i{ width:8px; height:8px; border-radius:50%; display:inline-block; }
+.domain-actions{ display:flex; gap:8px; }
+.domain-meta{ font-size:11.5px; color:var(--ink-faint); margin-top:10px; }
+
+.empty-state{
+  border:1.5px dashed var(--line-strong); border-radius:14px; padding:40px 24px; text-align:center; color:var(--ink-soft);
+}
+.empty-state h3{ margin:0 0 8px; color:var(--ink); }
+.empty-state p{ margin:0 0 16px; font-size:13.5px; }
+
+/* ---------- Manage ---------- */
+.filter-bar{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px; }
+.chip{
+  border:1px solid var(--line-strong); background:var(--card); color:var(--ink-soft);
+  padding:6px 13px; border-radius:20px; font-size:12.5px; font-weight:500;
+}
+.chip.active{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.search-input{ margin-left:auto; padding:8px 12px; border-radius:9px; border:1px solid var(--line-strong); background:var(--card); font-size:13px; min-width:190px; }
+.search-input:focus{ outline:2px solid var(--ink-soft); outline-offset:1px; }
+
+.form-panel{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px; }
+.form-row{ display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+.form-row label{ font-size:12.5px; font-weight:700; color:var(--ink-soft); }
+.form-row input[type=text], .form-row textarea, .form-row select{
+  padding:10px 12px; border-radius:8px; border:1px solid var(--line-strong); background:var(--paper); font-size:14px; color:var(--ink);
+  width:100%;
+}
+.form-row textarea{ min-height:90px; resize:vertical; line-height:1.6; }
+.form-row input:focus, .form-row textarea:focus, .form-row select:focus{ outline:2px solid var(--ink-soft); outline-offset:1px; }
+.form-actions{ display:flex; gap:10px; margin-top:4px; }
+
+.card-list{ display:flex; flex-direction:column; gap:9px; }
+.card-row{ background:var(--card); border:1px solid var(--line); border-radius:11px; padding:13px 16px; }
+.card-row-top{ display:flex; align-items:center; gap:10px; cursor:pointer; }
+.dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.term{ font-weight:700; font-size:14.5px; flex-shrink:0; }
+.def-preview{ color:var(--ink-soft); font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; min-width:0; }
+.fam-badge{ font-size:11px; padding:3px 9px; border-radius:20px; font-weight:700; flex-shrink:0; }
+.fam-familiar{ background:var(--good-soft); color:var(--good); }
+.fam-unfamiliar{ background:var(--bad-soft); color:var(--bad); }
+.fam-new{ background:var(--new-soft); color:var(--ink-faint); }
+.card-row-collapsible{ display:none; }
+.card-row.expanded .card-row-collapsible{ display:block; }
+.card-row-body{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--line-strong); font-size:13.5px; line-height:1.75; white-space:pre-wrap; }
+.card-row-actions{ display:flex; gap:6px; margin-top:10px; }
+
+/* ---------- Practice ---------- */
+.practice-wrap{ max-width:760px; }
+.settings-panel{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px; }
+.settings-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; }
+.settings-grid .form-row{ margin-bottom:0; }
+.pool-hint{ font-size:12.5px; color:var(--ink-soft); margin:-6px 0 20px; }
+
+.session-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; }
+.progress-ring-wrap{ display:flex; align-items:center; gap:12px; }
+.progress-text{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:15px; }
+.progress-text small{ color:var(--ink-soft); font-family:'Noto Sans TC',sans-serif; font-weight:400; font-size:12px; }
+
+.flip-stage{ perspective:1400px; margin:0 auto 22px; max-width:520px; }
+.flashcard{
+  position:relative; height:300px; border-radius:18px; cursor:pointer;
+  transform-style:preserve-3d; transition:transform .5s cubic-bezier(.3,.9,.4,1);
+}
+.flashcard.flipped{ transform:rotateY(180deg); }
+.face{
+  position:absolute; inset:0; backface-visibility:hidden; border-radius:18px;
+  background:var(--card); border:2px dashed var(--line-strong);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  padding:36px 30px;
+}
+.face::before, .face::after{
+  content:''; position:absolute; top:16px; width:11px; height:11px; border-radius:50%;
+  background:var(--paper); border:2px solid var(--line-strong);
+}
+.face::before{ left:16px; } .face::after{ right:16px; }
+.face-tab{ position:absolute; top:-9px; left:34px; width:58px; height:16px; border-radius:6px 6px 0 0; }
+.face-back{ transform:rotateY(180deg); }
+.face-label{ position:absolute; top:26px; font-size:11px; letter-spacing:1.5px; color:var(--ink-faint); font-weight:700; }
+.face-term{ font-family:'Noto Serif TC',serif; font-weight:900; font-size:28px; line-height:1.4; }
+.face-def{ font-size:15.5px; line-height:1.85; white-space:pre-wrap; max-height:200px; overflow-y:auto; }
+.flip-hint{ text-align:center; font-size:12.5px; color:var(--ink-faint); margin-bottom:20px; }
+
+.judge-row{ display:flex; gap:14px; justify-content:center; }
+.judge-btn{
+  flex:1; max-width:220px; border-radius:12px; padding:15px; font-size:14.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center; gap:8px; border:1.5px solid transparent;
+}
+.judge-btn svg{ width:18px; height:18px; }
+.judge-bad{ background:var(--bad-soft); color:var(--bad); border-color:var(--bad); }
+.judge-bad:hover{ background:var(--bad); color:#fff; }
+.judge-good{ background:var(--good-soft); color:var(--good); border-color:var(--good); }
+.judge-good:hover{ background:var(--good); color:#fff; }
+.skip-link{ display:block; text-align:center; margin-top:16px; font-size:12.5px; color:var(--ink-faint); background:none; border:none; text-decoration:underline; }
+.session-end-link{ text-align:center; margin-top:10px; }
+.session-end-link button{ background:none; border:none; font-size:12px; color:var(--ink-faint); text-decoration:underline; }
+
+.summary-box{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:36px; text-align:center; }
+.summary-box h2{ margin:0 0 20px; }
+.summary-stats{ display:flex; justify-content:center; gap:26px; margin-bottom:26px; }
+.summary-stats div{ text-align:center; }
+.summary-stats .n{ font-family:'Noto Serif TC',serif; font-size:24px; font-weight:900; }
+.summary-stats .l{ font-size:12px; color:var(--ink-soft); }
+.summary-actions{ display:flex; gap:12px; justify-content:center; }
+
+/* ---------- Notes ---------- */
+.domain-chip-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px; }
+.domain-chip{
+  padding:9px 16px; border-radius:20px; font-size:13px; font-weight:700; border:1.5px solid transparent; background:var(--card); color:var(--ink-soft);
+}
+.note-list{ display:flex; flex-direction:column; gap:10px; }
+.note-card{ background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.note-head{ display:flex; align-items:center; gap:10px; padding:14px 16px; cursor:pointer; }
+.note-head .chevron{ transition:transform .2s ease; flex-shrink:0; color:var(--ink-faint); }
+.note-head .chevron svg{ width:14px; height:14px; }
+.note-card.open .chevron{ transform:rotate(90deg); }
+.note-title{ font-weight:700; font-size:14.5px; flex:1; }
+.note-order-btns{ display:flex; gap:2px; }
+.note-body{ display:none; padding:0 18px 18px 40px; font-size:13.5px; line-height:1.85; color:var(--ink); border-top:1px dashed var(--line-strong); margin-top:0; }
+.note-card.open .note-body{ display:block; }
+.note-body-inner{ padding-top:14px; }
+.note-body-inner img{ max-width:100%; border-radius:8px; margin:8px 0; display:block; }
+.note-body-inner a{ color:var(--accent-teal); text-decoration:underline; word-break:break-all; }
+.note-body-inner ul, .note-body-inner ol{ margin:6px 0; padding-left:22px; }
+.note-body-inner p{ margin:0 0 10px; }
+
+/* rich text editor */
+.rt-toolbar{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+.rt-btn{ border:1px solid var(--line-strong); background:var(--card); color:var(--ink-soft); border-radius:7px; padding:7px 12px; font-size:12.5px; font-family:'Noto Sans TC',sans-serif; }
+.rt-btn:hover{ border-color:var(--ink-soft); color:var(--ink); }
+.rt-editable{
+  min-height:170px; max-height:420px; overflow-y:auto; border:1px solid var(--line-strong); border-radius:8px;
+  padding:12px 14px; background:var(--paper); font-size:14px; line-height:1.8; color:var(--ink);
+}
+.rt-editable:focus{ outline:2px solid var(--ink-soft); outline-offset:1px; }
+.rt-editable img{ max-width:100%; border-radius:8px; margin:8px 0; display:block; }
+.rt-editable a{ color:var(--accent-teal); text-decoration:underline; }
+.rt-editable ul, .rt-editable ol{ margin:6px 0; padding-left:22px; }
+.rt-editable:empty:before{ content:attr(data-placeholder); color:var(--ink-faint); }
+.note-actions{ display:flex; gap:6px; margin-top:12px; }
+
+.section-block{ margin-bottom:34px; }
+.section-title-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.section-title{ font-family:'Noto Serif TC',serif; font-weight:700; font-size:16px; }
+
+/* ---------- Modal ---------- */
+.modal-overlay{ position:fixed; inset:0; background:rgba(30,25,15,0.35); display:flex; align-items:center; justify-content:center; z-index:100; padding:20px; }
+.modal-box{ background:var(--paper); border-radius:16px; padding:26px; width:100%; max-width:460px; max-height:85vh; overflow-y:auto; border:1px solid var(--line-strong); }
+.modal-box h3{ margin:0 0 16px; }
+.domain-edit-row{ display:flex; align-items:center; gap:8px; padding:9px 0; border-bottom:1px dashed var(--line); }
+.domain-edit-row input{ flex:1; border:1px solid var(--line-strong); border-radius:7px; padding:7px 9px; font-size:13.5px; background:var(--card); }
+.swatch-row{ display:flex; gap:6px; }
+.swatch{ width:18px; height:18px; border-radius:50%; border:2px solid transparent; cursor:pointer; }
+.swatch.sel{ border-color:var(--ink); }
+.add-domain-row{ display:flex; gap:8px; margin-top:14px; }
+.add-domain-row input{ flex:1; border:1px solid var(--line-strong); border-radius:8px; padding:9px 10px; font-size:13.5px; background:var(--card); }
+.modal-close-row{ text-align:right; margin-top:16px; }
+
+/* ---------- Toast ---------- */
+.toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--paper); padding:10px 20px; border-radius:24px; font-size:13px; font-weight:500; opacity:0; transition:all .25s ease; pointer-events:none; z-index:200; }
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ---------- Mobile tabbar ---------- */
+.mobile-tabbar{ display:none; }
+
+@media (max-width:820px){
+  .sidebar{ display:none; }
+  .main{ padding:20px 16px 90px; }
+  .stat-row{ grid-template-columns:repeat(2,1fr); }
+  .settings-grid{ grid-template-columns:1fr; }
+  .domain-grid{ grid-template-columns:1fr; }
+  .mobile-tabbar{
+    display:flex; position:fixed; bottom:0; left:0; right:0; background:var(--paper-deep);
+    border-top:1px solid var(--line); padding:8px 6px calc(env(safe-area-inset-bottom,0px) + 6px);
+    justify-content:space-around; z-index:50;
+  }
+  .mtab{ background:none; border:none; display:flex; flex-direction:column; align-items:center; gap:3px; color:var(--ink-faint); font-size:10.5px; padding:6px 8px; border-radius:10px; flex:1; }
+  .mtab svg{ width:19px; height:19px; }
+  .mtab.active{ color:var(--ink); font-weight:700; background:var(--card); }
+  .view-title{ font-size:21px; }
+  .flashcard{ height:250px; }
+  .face-term{ font-size:22px; }
+  .judge-row{ flex-direction:column; align-items:center; }
+  .judge-btn{ max-width:none; width:100%; }
+  .search-input{ margin-left:0; width:100%; }
+}
+
+.loading-screen{ display:flex; align-items:center; justify-content:center; height:100vh; flex-direction:column; gap:14px; color:var(--ink-soft); font-size:13.5px; }
+.spin{ width:26px; height:26px; border:3px solid var(--line); border-top-color:var(--ink-soft); border-radius:50%; animation:spin 0.8s linear infinite; }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+/* ---------- 第一/二層門檻:Firebase 設定畫面 / 登入畫面 ---------- */
+.gate-screen{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+.gate-card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:34px 30px; width:100%; max-width:420px; }
+.gate-title{ font-size:20px; margin:0 0 6px; font-weight:900; }
+.gate-sub{ font-size:12.5px; color:var(--ink-soft); margin:0 0 22px; line-height:1.7; }
+.gate-field{ margin-bottom:13px; }
+.gate-field label{ display:block; font-size:11.5px; font-weight:700; color:var(--ink-soft); margin-bottom:5px; }
+.gate-field input{ width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--line-strong); background:var(--paper); font-size:13.5px; color:var(--ink); }
+.gate-field input:focus{ outline:2px solid var(--ink-soft); outline-offset:1px; }
+.gate-actions{ margin-top:18px; }
+.gate-error{ font-size:12.5px; color:var(--bad); margin-top:12px; display:none; line-height:1.6; }
+.google-btn{ width:100%; display:flex; align-items:center; justify-content:center; gap:10px; padding:12px; border-radius:9px; border:1px solid var(--line-strong); background:var(--card); font-size:14px; font-weight:700; color:var(--ink); }
+.google-btn:hover{ border-color:var(--ink-soft); background:var(--paper); }
+.google-btn svg{ width:18px; height:18px; flex-shrink:0; }
+
+/* ---------- 第四項:主畫面角落的帳號列(登出 / 清除配置) ---------- */
+.account-bar{ position:fixed; top:12px; right:14px; display:flex; gap:8px; z-index:60; }
+.account-bar button{ font-size:11px; padding:6px 12px; border-radius:20px; border:1px solid var(--line-strong); background:var(--card); color:var(--ink-soft); box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+.account-bar button:hover{ color:var(--ink); border-color:var(--ink-soft); }
+#main-content .main{ padding-top:64px; }
+@media (max-width:820px){
+  #main-content .main{ padding-top:58px; }
+  .account-bar button{ font-size:10.5px; padding:5px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     第一層門檻:Firebase 設定畫面
+     網頁開啟時若 localStorage 裡沒有 Firebase 設定資料,就顯示這個畫面
+============================================================ -->
+<div class="gate-screen" id="config-screen" style="display:none;">
+  <div class="gate-card">
+    <h2 class="gate-title serif">設定 Firebase 連線</h2>
+    <p class="gate-sub">請貼上你的 Firebase 專案設定,只需要設定一次,之後開啟網頁會自動記得。</p>
+    <div class="gate-field"><label>apiKey</label><input type="text" id="cfg-apiKey" autocomplete="off"></div>
+    <div class="gate-field"><label>authDomain</label><input type="text" id="cfg-authDomain" autocomplete="off"></div>
+    <div class="gate-field"><label>projectId</label><input type="text" id="cfg-projectId" autocomplete="off"></div>
+    <div class="gate-field"><label>storageBucket</label><input type="text" id="cfg-storageBucket" autocomplete="off"></div>
+    <div class="gate-field"><label>messagingSenderId</label><input type="text" id="cfg-messagingSenderId" autocomplete="off"></div>
+    <div class="gate-field"><label>appId</label><input type="text" id="cfg-appId" autocomplete="off"></div>
+    <div class="gate-field"><label>databaseURL</label><input type="text" id="cfg-databaseURL" placeholder="https://xxx-default-rtdb.asia-southeast1.firebasedatabase.app" autocomplete="off"></div>
+    <div class="gate-actions">
+      <button class="btn btn-primary" id="btn-save-config" style="width:100%;justify-content:center;">儲存配置</button>
+    </div>
+    <p class="gate-error" id="config-error"></p>
+  </div>
+</div>
+
+<!-- ============================================================
+     第二層門檻:Google 登入畫面
+     Firebase 初始化完成後,若使用者尚未登入就顯示這個畫面
+============================================================ -->
+<div class="gate-screen" id="login-screen" style="display:flex;">
+  <div class="gate-card" style="text-align:center;">
+    <h2 class="gate-title serif">家政教甄整理站</h2>
+    <p class="gate-sub">請使用 Google 帳號登入,你的字卡與筆記會依帳號同步到雲端。</p>
+    <button class="google-btn" id="btn-google-login">
+      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.5 6 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.7 18.9 13 24 13c3.1 0 5.8 1.1 8 3l5.7-5.7C34.5 6 29.5 4 24 4c-7.7 0-14.4 4.3-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-1.8 14-5l-6.5-5.4C29.4 35.4 26.8 36 24 36c-5.3 0-9.7-3.1-11.3-7.5l-6.6 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.9 2.5-2.6 4.6-4.8 6.1l6.5 5.4C40.5 36.5 44 30.8 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
+      使用 Google 帳號登入
+    </button>
+    <p class="gate-error" id="login-error"></p>
+  </div>
+</div>
+
+<!-- ============================================================
+     第三層:驗證通過後才顯示 —— 原先製作好的網站內容
+============================================================ -->
+<div id="main-content" style="display:none;">
+
+  <!-- 第四項:使用者管理,角落的登出 / 清除配置按鈕 -->
+  <div class="account-bar">
+    <button id="btn-logout">登出</button>
+    <button id="btn-reset-config">清除配置</button>
+  </div>
+
+  <!-- 在此處放入您原先製作好的網站 HTML 內容 -->
+  <div id="app"></div>
+  <div class="toast" id="toast"></div>
+
+</div>
+
+<!-- Firebase compat 版 SDK:用一般的載入標籤引入,直接雙擊 HTML 開啟(file://)也能正常運作 -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+
+<script>
+/* ============================================================
+   一、Firebase 設定 / 登入驗證(包裝層)
+============================================================ */
+/* 用小包裝函式把 compat SDK(firebase.xxx)包成 v9+ 模組化的 ref()/set()/get() 呼叫方式,
+   下面「原網站程式」的程式碼完全不用改寫法,一樣可以用 ref(db,path)、set(reference,value)、get(reference) */
+function initializeApp(cfg){ return firebase.initializeApp(cfg); }
+function getAuth(app){ return app.auth(); }
+function getDatabase(app){ return app.database(); }
+function onAuthStateChanged(auth, cb){ return auth.onAuthStateChanged(cb); }
+function signOut(auth){ return auth.signOut(); }
+function setPersistence(auth, persistence){ return auth.setPersistence(persistence); }
+function signInWithPopup(auth, provider){ return auth.signInWithPopup(provider); }
+function ref(dbInstance, path){ return dbInstance.ref(path); }
+function set(reference, value){ return reference.set(value); }
+function get(reference){ return reference.once('value'); } // 回傳的 snapshot 一樣有 .exists() 和 .val()
+const GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+const browserLocalPersistence = firebase.auth.Auth.Persistence.LOCAL;
+
+const FIREBASE_CONFIG_KEY = 'firebaseConfig'; // localStorage 儲存 Firebase 設定的 key
+let firebaseApp = null;
+let auth = null;
+let db = null;
+let currentUser = null;
+let appHasBooted = false; // 避免 onAuthStateChanged 重複觸發時,把原網站的 App 重新初始化一次
+
+/* 畫面切換小工具:三個畫面互斥顯示 */
+function showScreen(id){
+  ['config-screen','login-screen','main-content'].forEach(sid=>{
+    const el = document.getElementById(sid);
+    if(!el) return;
+    if(sid===id) el.style.display = (sid==='main-content') ? 'block' : 'flex';
+    else el.style.display = 'none';
+  });
+}
+
+/* ---- 讀寫 localStorage 裡的 Firebase 設定 ---- */
+function loadFirebaseConfig(){
+  try{
+    const raw = localStorage.getItem(FIREBASE_CONFIG_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+function saveFirebaseConfigToStorage(cfg){
+  localStorage.setItem(FIREBASE_CONFIG_KEY, JSON.stringify(cfg));
+}
+function clearFirebaseConfigFromStorage(){
+  localStorage.removeItem(FIREBASE_CONFIG_KEY);
+}
+
+/* ---- 第一層:設定畫面的按鈕邏輯 ---- */
+function bindConfigScreen(){
+  document.getElementById('btn-save-config').addEventListener('click', ()=>{
+    const cfg = {
+      apiKey: document.getElementById('cfg-apiKey').value.trim(),
+      authDomain: document.getElementById('cfg-authDomain').value.trim(),
+      projectId: document.getElementById('cfg-projectId').value.trim(),
+      storageBucket: document.getElementById('cfg-storageBucket').value.trim(),
+      messagingSenderId: document.getElementById('cfg-messagingSenderId').value.trim(),
+      appId: document.getElementById('cfg-appId').value.trim(),
+      databaseURL: document.getElementById('cfg-databaseURL').value.trim()
+    };
+    const errEl = document.getElementById('config-error');
+    errEl.style.display = 'none';
+    if(!cfg.apiKey || !cfg.projectId || !cfg.databaseURL){
+      errEl.textContent = '請至少填寫 apiKey、projectId、databaseURL 這三個欄位。';
+      errEl.style.display = 'block';
+      return;
+    }
+    // 儲存配置後立即初始化 Firebase
+    saveFirebaseConfigToStorage(cfg);
+    bootFirebase(cfg);
+  });
+}
+
+/* ---- 用設定資料初始化 Firebase,並開始監聽登入狀態 ---- */
+function bootFirebase(cfg){
+  try{
+    firebaseApp = initializeApp(cfg);
+    auth = getAuth(firebaseApp);
+    db = getDatabase(firebaseApp);
+
+    // 設定登入持久化:登入一次後,下次開網頁不用重複登入
+    setPersistence(auth, browserLocalPersistence).catch(()=>{});
+
+    bindLoginScreen();
+    bindAccountBar();
+
+    // 保護機制:如果 10 秒內都沒收到登入狀態回應(例如瀏覽器封鎖第三方儲存),
+    // 顯示提示訊息,而不是讓畫面卡住看起來像空白
+    let authResponded = false;
+    const authTimeout = setTimeout(()=>{
+      if(!authResponded){
+        const errEl = document.getElementById('login-error');
+        if(errEl){
+          errEl.textContent = '連線好像比較久,如果畫面一直沒有反應,請確認網路連線,或試著重新整理頁面。';
+          errEl.style.display = 'block';
+        }
+      }
+    }, 10000);
+
+    // 第二層門檻:只有確認登入後,才放行進入主內容
+    onAuthStateChanged(auth, (user)=>{
+      authResponded = true;
+      clearTimeout(authTimeout);
+      currentUser = user;
+      if(user){
+        showScreen('main-content');
+        if(!appHasBooted){
+          appHasBooted = true;
+          initApp(); // 進入原網站內容,開始讀取這個 Google 帳號底下的資料
+        }
+      }else{
+        appHasBooted = false;
+        detachRealtimeListener(); // 登出時停止監聽,避免殘留的監聽器造成資料錯亂
+        showScreen('login-screen');
+      }
+    });
+  }catch(e){
+    const errEl = document.getElementById('config-error');
+    errEl.textContent = 'Firebase 設定有誤:' + e.message;
+    errEl.style.display = 'block';
+    showScreen('config-screen');
+  }
+}
+
+/* ---- 第二層:Google 登入按鈕邏輯 ---- */
+function bindLoginScreen(){
+  document.getElementById('btn-google-login').addEventListener('click', ()=>{
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider).catch((e)=>{
+      const errEl = document.getElementById('login-error');
+      errEl.textContent = '登入失敗:' + e.message;
+      errEl.style.display = 'block';
+    });
+  });
+}
+
+/* ---- 第四項:主畫面角落的登出 / 清除配置 ---- */
+function bindAccountBar(){
+  document.getElementById('btn-logout').addEventListener('click', ()=>{
+    signOut(auth);
+  });
+  document.getElementById('btn-reset-config').addEventListener('click', ()=>{
+    showConfirmModal('確定要清除 Firebase 設定嗎?清除後需要重新輸入設定資料才能使用(雲端上已經存的資料不會被刪除)。', true, ()=>{
+      clearFirebaseConfigFromStorage();
+      if(auth) signOut(auth).catch(()=>{});
+      location.reload();
+    });
+  });
+}
+
+/* ---- 啟動流程:先檢查 localStorage 有沒有 Firebase 設定 ---- */
+bindConfigScreen();
+(function boot(){
+  const cfg = loadFirebaseConfig();
+  if(cfg){
+    bootFirebase(cfg);
+  }else{
+    showScreen('config-screen'); // 沒有設定資料 -> 顯示第一層設定畫面
+  }
+})();
+
+/* ============================================================
+   二、以下為原網站程式
+   儲存/讀取邏輯已改為 Firebase Realtime Database(路徑:users/{uid}/homecAppData)
+============================================================ */
+
+const DATA_NODE = 'homecAppData'; // Realtime Database 底下的資料節點名稱
+
+const ACCENT_ORDER = ['family','child','food','clothing','teal','slate'];
+const ACCENT_LABEL = {
+  family:'家庭教育與資源管理式樣', child:'兒童發展樣式', food:'飲食樣式', clothing:'服飾樣式', teal:'靛青樣式', slate:'石墨樣式'
+};
+
+function uid(prefix){ return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function defaultState(){
+  return {
+    domains: [
+      { id: uid('d'), name: '生活管理', accent: 'family' },
+      { id: uid('d'), name: '服飾',     accent: 'clothing' },
+      { id: uid('d'), name: '飲食',     accent: 'food' },
+      { id: uid('d'), name: '家庭',     accent: 'teal' }
+    ],
+    cards: [],
+    notes: []
+  };
+}
+
+let state = null;
+let ui = {
+  view: 'dashboard',
+  manageFilterDomain: 'all',
+  manageSearch: '',
+  manageFormOpen: false,
+  editingCardId: null,
+  expandedCardId: null,
+  notesDomain: null,
+  notesFormOpen: false,
+  editingNoteId: null,
+  domainModalOpen: false,
+  practice: {
+    phase: 'settings', // settings | session | summary
+    domain: 'all',
+    scope: 'all', // all | weak | unfamiliar
+    order: 'random', // random | sequential
+    queue: [],
+    index: 0,
+    flipped: false,
+    stats: { familiar: 0, unfamiliar: 0, skipped: 0 }
+  }
+};
+
+/* 依照規則,資料放在 users/$uid 底下,每個帳號各自獨立 */
+function userDataRef(){
+  return ref(db, 'users/' + currentUser.uid + '/' + DATA_NODE);
+}
+
+let realtimeListenerFn = null; // 目前掛著的即時監聽函式,登出/切換帳號時要記得解除
+let isWritingLocally = false;  // 正在寫入自己的變更時,先不要被監聽回來的同一份資料觸發重繪
+
+/* 第一次進來時,先讀一次資料,盡快顯示畫面 */
+async function loadData(){
+  try{
+    const snapshot = await get(userDataRef()); // 用 ref + get 讀取這個帳號的資料
+    if(snapshot.exists()){
+      const parsed = snapshot.val();
+      if(parsed && Array.isArray(parsed.domains)) return parsed;
+    }
+  }catch(e){ console.error('讀取 Firebase 資料失敗', e); }
+  return defaultState();
+}
+
+/* 掛上即時監聽:之後不管是手機還是電腦哪一邊更新了資料,
+   Realtime Database 都會主動推送最新版本過來,不用重新整理頁面 */
+function attachRealtimeListener(){
+  detachRealtimeListener();
+  const dataRef = userDataRef();
+  realtimeListenerFn = (snapshot)=>{
+    if(isWritingLocally) return; // 這次推送是自己剛寫入造成的回音,略過避免畫面閃爍/打斷輸入
+    if(!snapshot.exists()) return;
+    const incoming = snapshot.val();
+    if(!incoming || !Array.isArray(incoming.domains)) return;
+    state = incoming;
+    updateSidebarStats();
+    // 如果正在新增/編輯字卡、筆記或領域,先不要整頁重繪打斷輸入,等關閉編輯視窗後畫面自然就是最新的
+    if(isAnyFormOpen()){
+      showToast('其他裝置有更新資料,關閉目前的編輯視窗後會自動顯示');
+    }else{
+      renderView();
+    }
+  };
+  dataRef.on('value', realtimeListenerFn, (err)=>{
+    console.error('即時監聽發生錯誤(可能是 Realtime Database 規則權限問題)', err);
+    showToast('即時同步發生問題:' + (err && err.message ? err.message : '權限錯誤'));
+  });
+}
+function detachRealtimeListener(){
+  if(db && currentUser && realtimeListenerFn){
+    try{ userDataRef().off('value', realtimeListenerFn); }catch(e){}
+  }
+  realtimeListenerFn = null;
+}
+function isAnyFormOpen(){
+  return !!(ui.manageFormOpen || ui.editingCardId || ui.notesFormOpen || ui.editingNoteId || ui.domainModalOpen);
+}
+
+let saveTimer = null;
+function persist(showToastMsg){
+  updateSidebarStats();
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    isWritingLocally = true;
+    try{
+      await set(userDataRef(), state); // 用 ref + set 把整份資料寫回這個帳號底下
+      if(showToastMsg) showToast(showToastMsg);
+    }catch(e){
+      showToast('儲存失敗,請稍後再試');
+    }finally{
+      // 短暫延遲後才恢復監聽反應,確保這次寫入自己觸發的推送已經跑完
+      setTimeout(()=>{ isWritingLocally = false; }, 400);
+    }
+  }, 300);
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=> t.classList.remove('show'), 1800);
+}
+
+function esc(str){
+  return String(str==null?'':str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+/* 清除筆記富文本中可能夾帶的危險標籤/屬性,只保留格式與連結、圖片 */
+function sanitizeHtml(html){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = html || '';
+  wrap.querySelectorAll('script,style,iframe,object,embed,link,meta,form').forEach(el=>el.remove());
+  wrap.querySelectorAll('*').forEach(el=>{
+    [...el.attributes].forEach(attr=>{
+      const name = attr.name.toLowerCase();
+      const val = attr.value || '';
+      if(name.startsWith('on')) el.removeAttribute(attr.name);
+      if((name==='href' || name==='src') && /^\s*javascript:/i.test(val)) el.removeAttribute(attr.name);
+    });
+  });
+  return wrap.innerHTML;
+}
+
+/* 顯示模式下,讓筆記裡的連結安全地在新分頁開啟 */
+function withLinkTargets(html){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = html || '';
+  wrap.querySelectorAll('a').forEach(a=>{
+    a.setAttribute('target','_blank');
+    a.setAttribute('rel','noopener noreferrer');
+  });
+  return wrap.innerHTML;
+}
+
+function getDomain(id){ return state.domains.find(d=>d.id===id) || null; }
+function domainName(id){ const d = getDomain(id); return d ? d.name : '未分類'; }
+function domainAccent(id){ const d = getDomain(id); return d ? d.accent : 'slate'; }
+
+function cardsOf(domainId){
+  if(domainId==='all') return state.cards;
+  return state.cards.filter(c=>c.domain===domainId);
+}
+function famCount(list, fam){ return list.filter(c=>c.familiarity===fam).length; }
+
+/* ============================================================
+   Icons
+============================================================ */
+const ICONS = {
+  dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+  cards: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2" transform="rotate(-6 10 11)"/><rect x="7" y="8" width="14" height="10" rx="2"/></svg>',
+  practice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v6h6"/><path d="M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14.9-4"/><path d="M4 14a8 8 0 0 0 14.9 4"/></svg>',
+  notes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 8h7M9 12h7"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1L5 6"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
+  up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>',
+  down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>'
+};
+
+/* ============================================================
+   Render root
+============================================================ */
+function render(){
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 34 34" fill="none">
+            <rect x="2" y="2" width="30" height="30" rx="8" fill="var(--accent-family-soft)"/>
+            <path d="M10 22V12l7-4 7 4v10" stroke="var(--accent-family)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 22v-6h6v6" stroke="var(--accent-family)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="brand-title">家政教甄整理站</div>
+          <div class="brand-sub">四大領域 · 字卡與知識脈絡</div>
+        </div>
+        <nav class="nav">
+          ${navItem('dashboard','儀表板','dashboard')}
+          ${navItem('manage','字卡管理','cards')}
+          ${navItem('practice','練習背誦','practice')}
+          ${navItem('notes','知識脈絡','notes')}
+        </nav>
+        <div class="sidebar-foot">
+          <div class="mini-stat">字卡總數 <b id="stat-total-cards">${state.cards.length}</b></div>
+          <div class="mini-stat">已熟悉 <b id="stat-familiar">${famCount(state.cards,'familiar')}</b> · 待加強 <b id="stat-weak">${famCount(state.cards,'unfamiliar')+famCount(state.cards,'new')}</b></div>
+        </div>
+      </aside>
+      <main class="main">
+        <div id="view-root"></div>
+      </main>
+    </div>
+    <nav class="mobile-tabbar">
+      ${mobileTab('dashboard','儀表板','dashboard')}
+      ${mobileTab('manage','字卡','cards')}
+      ${mobileTab('practice','練習','practice')}
+      ${mobileTab('notes','筆記','notes')}
+    </nav>
+  `;
+  renderView();
+  bindGlobalNav();
+}
+
+function navItem(view,label,icon){
+  return `<button class="nav-item ${ui.view===view?'active':''}" data-nav="${view}">${ICONS[icon]}<span>${label}</span></button>`;
+}
+function mobileTab(view,label,icon){
+  return `<button class="mtab ${ui.view===view?'active':''}" data-nav="${view}">${ICONS[icon]}<span>${label}</span></button>`;
+}
+function bindGlobalNav(){
+  document.querySelectorAll('[data-nav]').forEach(btn=>{
+    btn.addEventListener('click', ()=> switchView(btn.getAttribute('data-nav')));
+  });
+}
+/* 切換頁面時只換掉內容區跟按鈕的 active 狀態,不重建整個側邊欄,切換更快也不會閃爍 */
+function switchView(view){
+  ui.view = view;
+  document.querySelectorAll('[data-nav]').forEach(btn=>{
+    btn.classList.toggle('active', btn.getAttribute('data-nav')===view);
+  });
+  renderView();
+}
+function updateSidebarStats(){
+  const t = document.getElementById('stat-total-cards'); if(t) t.textContent = state.cards.length;
+  const f = document.getElementById('stat-familiar'); if(f) f.textContent = famCount(state.cards,'familiar');
+  const w = document.getElementById('stat-weak'); if(w) w.textContent = famCount(state.cards,'unfamiliar')+famCount(state.cards,'new');
+}
+
+function renderView(){
+  const root = document.getElementById('view-root');
+  if(ui.view==='dashboard') root.innerHTML = viewDashboard();
+  else if(ui.view==='manage') root.innerHTML = viewManage();
+  else if(ui.view==='practice') root.innerHTML = viewPractice();
+  else if(ui.view==='notes') root.innerHTML = viewNotes();
+  bindViewEvents();
+  if(ui.domainModalOpen) renderDomainModal();
+}
+
+/* ============================================================
+
+   DASHBOARD
+============================================================ */
+function viewDashboard(){
+  const total = state.cards.length;
+  const familiar = famCount(state.cards,'familiar');
+  const unfamiliar = famCount(state.cards,'unfamiliar');
+  const notesTotal = state.notes.length;
+
+  const domainsHtml = state.domains.map(d=>{
+    const list = cardsOf(d.id);
+    const f = famCount(list,'familiar'), u = famCount(list,'unfamiliar'), n = famCount(list,'new');
+    const tot = list.length || 1;
+    const nCount = state.notes.filter(x=>x.domain===d.id).length;
+    return `
+    <div class="domain-card">
+      <div class="domain-tab" style="background:var(--accent-${d.accent})"></div>
+      <div class="domain-name" data-editname="${d.id}">${esc(d.name)}</div>
+      <div class="seg-bar">
+        <div class="seg" style="width:${f/tot*100}%; background:var(--good)"></div>
+        <div class="seg" style="width:${u/tot*100}%; background:var(--bad)"></div>
+        <div class="seg" style="width:${n/tot*100}%; background:var(--new)"></div>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--good)"></i>熟悉 ${f}</span>
+        <span><i style="background:var(--bad)"></i>不熟悉 ${u}</span>
+        <span><i style="background:var(--new)"></i>未練習 ${n}</span>
+      </div>
+      <div class="domain-actions">
+        <button class="btn btn-soft btn-sm" data-go-practice="${d.id}">練習這個領域</button>
+        <button class="btn btn-ghost btn-sm" data-go-notes="${d.id}">查看筆記</button>
+      </div>
+      <div class="domain-meta">共 ${list.length} 張字卡 · ${nCount} 筆脈絡筆記</div>
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="view-header">
+      <div>
+        <h1 class="view-title">儀表板</h1>
+        <p class="view-desc">掌握家政教甄四大領域的準備進度</p>
+      </div>
+      <button class="btn btn-ghost" id="btn-manage-domains">${ICONS.gear}管理領域</button>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="num">${total}</div><div class="lab">字卡總數</div></div>
+      <div class="stat-box"><div class="num">${familiar}</div><div class="lab">已熟悉</div></div>
+      <div class="stat-box"><div class="num">${unfamiliar}</div><div class="lab">待加強</div></div>
+      <div class="stat-box"><div class="num">${notesTotal}</div><div class="lab">脈絡筆記段落</div></div>
+    </div>
+    ${state.domains.length ? `<div class="domain-grid">${domainsHtml}</div>` : `
+      <div class="empty-state">
+        <h3>還沒有任何領域</h3>
+        <p>新增第一個領域,開始整理家政教甄的四大範疇吧。</p>
+        <button class="btn btn-primary" id="btn-manage-domains-empty">${ICONS.plus}新增領域</button>
+      </div>`}
+  `;
+}
+
+/* ============================================================
+   DOMAIN MODAL
+============================================================ */
+function renderDomainModal(){
+  const old = document.getElementById('domain-modal-overlay');
+  if(old) old.remove();
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'domain-modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <h3>管理領域</h3>
+      <div id="domain-edit-list">
+        ${state.domains.map(d=>`
+          <div class="domain-edit-row" data-domain-row="${d.id}">
+            <input type="text" value="${esc(d.name)}" data-rename="${d.id}">
+            <div class="swatch-row">
+              ${ACCENT_ORDER.map(a=>`<span class="swatch ${a===d.accent?'sel':''}" style="background:var(--accent-${a})" data-setaccent="${d.id}" data-accentval="${a}"></span>`).join('')}
+            </div>
+            <button class="icon-btn" data-del-domain="${d.id}">${ICONS.trash}</button>
+          </div>
+        `).join('')}
+      </div>
+      <div class="add-domain-row">
+        <input type="text" id="new-domain-name" placeholder="新增領域名稱,例如「家庭生活教育」">
+        <button class="btn btn-primary btn-sm" id="btn-add-domain">${ICONS.plus}新增</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="btn-reset-domains" style="width:100%; justify-content:center; margin-top:12px;">重設為預設四大領域(生活管理／服飾／飲食／家庭)</button>
+      <div class="modal-close-row">
+        <button class="btn btn-soft" id="btn-close-domain-modal">完成</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay){ closeDomainModal(); } });
+  document.getElementById('btn-close-domain-modal').addEventListener('click', closeDomainModal);
+
+  overlay.querySelectorAll('[data-rename]').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      const d = getDomain(inp.getAttribute('data-rename'));
+      if(d){ d.name = inp.value.trim() || d.name; persist('已更新領域名稱'); renderView(); }
+    });
+  });
+  overlay.querySelectorAll('[data-setaccent]').forEach(sw=>{
+    sw.addEventListener('click', ()=>{
+      const d = getDomain(sw.getAttribute('data-setaccent'));
+      if(d){ d.accent = sw.getAttribute('data-accentval'); persist(); renderView(); }
+    });
+  });
+  overlay.querySelectorAll('[data-del-domain]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-del-domain');
+      const d = getDomain(id);
+      const count = cardsOf(id).length + state.notes.filter(n=>n.domain===id).length;
+      const msg = count>0 ? `刪除「${d.name}」後,底下 ${count} 筆字卡/筆記會改標示為未分類,確定要刪除嗎?` : `確定要刪除「${d.name}」嗎?`;
+      showConfirmModal(msg, true, ()=>{
+        state.domains = state.domains.filter(x=>x.id!==id);
+        state.cards.forEach(c=>{ if(c.domain===id) c.domain=null; });
+        state.notes.forEach(n=>{ if(n.domain===id) n.domain=null; });
+        persist('已刪除領域');
+        renderView();
+      });
+    });
+  });
+  document.getElementById('btn-add-domain').addEventListener('click', addDomainFromModal);
+  document.getElementById('new-domain-name').addEventListener('keydown', (e)=>{ if(e.key==='Enter') addDomainFromModal(); });
+  document.getElementById('btn-reset-domains').addEventListener('click', ()=>{
+    showConfirmModal('這會把領域清單重設為「生活管理、服飾、飲食、家庭」四個預設領域。原本領域底下的字卡與筆記內容不會被刪除,但會變成未分類,需要再手動歸類。確定要重設嗎?', true, ()=>{
+      state.domains = defaultState().domains;
+      persist('已重設為預設四大領域');
+      renderView();
+    });
+  });
+}
+function showConfirmModal(message, danger, onConfirm){
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.style.zIndex = '300';
+  overlay.innerHTML = `
+    <div class="modal-box" style="max-width:380px;">
+      <h3 style="margin-bottom:10px;">確認動作</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin:0 0 20px;">${esc(message)}</p>
+      <div class="form-actions" style="justify-content:flex-end;">
+        <button class="btn btn-ghost" id="confirm-modal-cancel">取消</button>
+        <button class="btn" id="confirm-modal-ok" style="${danger ? 'background:var(--bad);color:#fff;' : 'background:var(--ink);color:var(--paper);'}">確定${danger?'刪除':''}</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const close = ()=> overlay.remove();
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
+  document.getElementById('confirm-modal-cancel').addEventListener('click', close);
+  document.getElementById('confirm-modal-ok').addEventListener('click', ()=>{ close(); onConfirm(); });
+}
+
+function showPromptModal(title, placeholder, onSubmit){
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.style.zIndex = '300';
+  overlay.innerHTML = `
+    <div class="modal-box" style="max-width:420px;">
+      <h3 style="margin-bottom:12px;">${esc(title)}</h3>
+      <input type="text" id="prompt-modal-input" placeholder="${esc(placeholder||'')}"
+        style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line-strong);background:var(--card);font-size:14px;margin-bottom:18px;">
+      <div class="form-actions" style="justify-content:flex-end;">
+        <button class="btn btn-ghost" id="prompt-modal-cancel">取消</button>
+        <button class="btn btn-primary" id="prompt-modal-ok">確定</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const input = document.getElementById('prompt-modal-input');
+  input.focus();
+  const close = ()=> overlay.remove();
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
+  document.getElementById('prompt-modal-cancel').addEventListener('click', close);
+  const submit = ()=>{ const val = input.value.trim(); close(); if(val) onSubmit(val); };
+  document.getElementById('prompt-modal-ok').addEventListener('click', submit);
+  input.addEventListener('keydown', (e)=>{ if(e.key==='Enter') submit(); });
+}
+
+function addDomainFromModal(){
+  const inp = document.getElementById('new-domain-name');
+  const name = inp.value.trim();
+  if(!name) return;
+  const accent = ACCENT_ORDER[state.domains.length % ACCENT_ORDER.length];
+  state.domains.push({ id: uid('d'), name, accent });
+  persist('已新增領域');
+  renderView();
+}
+function closeDomainModal(){
+  ui.domainModalOpen = false;
+  const el = document.getElementById('domain-modal-overlay');
+  if(el) el.remove();
+}
+
+/* ============================================================
+   MANAGE CARDS
+============================================================ */
+function viewManage(){
+  let list = cardsOf(ui.manageFilterDomain);
+  if(ui.manageSearch.trim()){
+    const q = ui.manageSearch.trim().toLowerCase();
+    list = list.filter(c=> c.term.toLowerCase().includes(q) || c.definition.toLowerCase().includes(q));
+  }
+  list = [...list].sort((a,b)=> domainName(a.domain).localeCompare(domainName(b.domain),'zh-Hant') || a.term.localeCompare(b.term,'zh-Hant'));
+
+  const editing = ui.editingCardId ? state.cards.find(c=>c.id===ui.editingCardId) : null;
+
+  return `
+    <div class="view-header">
+      <div>
+        <h1 class="view-title">字卡管理</h1>
+        <p class="view-desc">新增名詞解釋,建立你的家政教甄字卡庫</p>
+      </div>
+      ${!ui.manageFormOpen && !editing ? `<button class="btn btn-primary" id="btn-open-add-card">${ICONS.plus}新增字卡</button>` : ''}
+    </div>
+
+    ${(ui.manageFormOpen || editing) ? cardForm(editing) : ''}
+
+    <div class="filter-bar">
+      <button class="chip ${ui.manageFilterDomain==='all'?'active':''}" data-filter-domain="all">全部領域</button>
+      ${state.domains.map(d=>`<button class="chip ${ui.manageFilterDomain===d.id?'active':''}" data-filter-domain="${d.id}">${esc(d.name)}</button>`).join('')}
+      <input type="text" class="search-input" id="manage-search" placeholder="搜尋名詞或解釋..." value="${esc(ui.manageSearch)}">
+    </div>
+
+    ${list.length ? `<div class="card-list">${list.map(cardRow).join('')}</div>` : `
+      <div class="empty-state">
+        <h3>${state.cards.length===0 ? '尚未新增任何字卡' : '沒有符合條件的字卡'}</h3>
+        <p>${state.cards.length===0 ? '從新增第一張開始,把重點名詞解釋整理成字卡。' : '試著調整篩選領域或搜尋關鍵字。'}</p>
+        ${state.cards.length===0 ? `<button class="btn btn-primary" id="btn-open-add-card-empty">${ICONS.plus}新增字卡</button>` : ''}
+      </div>`}
+  `;
+}
+
+function cardForm(editing){
+  const domainOptions = state.domains.map(d=>`<option value="${d.id}" ${editing && editing.domain===d.id ? 'selected':''}>${esc(d.name)}</option>`).join('');
+  return `
+    <div class="form-panel">
+      <div class="form-row">
+        <label>所屬領域</label>
+        <select id="form-domain">${domainOptions || '<option value="">請先建立領域</option>'}</select>
+      </div>
+      <div class="form-row">
+        <label>名詞</label>
+        <input type="text" id="form-term" placeholder="例如:依附關係" value="${editing?esc(editing.term):''}">
+      </div>
+      <div class="form-row">
+        <label>解釋</label>
+        <textarea id="form-def" placeholder="輸入這個名詞的定義、重點說明...">${editing?esc(editing.definition):''}</textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-save-card">${ICONS.check}${editing?'儲存修改':'新增字卡'}</button>
+        <button class="btn btn-ghost" id="btn-cancel-card">取消</button>
+      </div>
+    </div>
+  `;
+}
+
+function cardRow(c){
+  const open = ui.expandedCardId===c.id;
+  const famLabel = c.familiarity==='familiar' ? '熟悉' : c.familiarity==='unfamiliar' ? '不熟悉' : '未練習';
+  const famClass = c.familiarity==='familiar' ? 'fam-familiar' : c.familiarity==='unfamiliar' ? 'fam-unfamiliar' : 'fam-new';
+  return `
+    <div class="card-row ${open?'expanded':''}" data-card-row="${c.id}">
+      <div class="card-row-top" data-toggle-card="${c.id}">
+        <span class="dot" style="background:var(--accent-${domainAccent(c.domain)})"></span>
+        <span class="term">${esc(c.term)}</span>
+        <span class="def-preview">${esc(c.definition)}</span>
+        <span class="fam-badge ${famClass}">${famLabel}</span>
+      </div>
+      <div class="card-row-collapsible">
+        <div class="card-row-body">${esc(c.definition)}</div>
+        <div class="card-row-actions">
+          <button class="btn btn-soft btn-sm" data-edit-card="${c.id}">${ICONS.edit}編輯</button>
+          <button class="btn btn-danger btn-sm" data-del-card="${c.id}">${ICONS.trash}刪除</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   PRACTICE
+============================================================ */
+function buildQueue(){
+  let list = cardsOf(ui.practice.domain);
+  if(ui.practice.scope==='weak') list = list.filter(c=>c.familiarity!=='familiar');
+  else if(ui.practice.scope==='unfamiliar') list = list.filter(c=>c.familiarity==='unfamiliar');
+  list = list.map(c=>c.id);
+  if(ui.practice.order==='random'){
+    for(let i=list.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [list[i],list[j]]=[list[j],list[i]]; }
+  }
+  return list;
+}
+
+function viewPractice(){
+  const p = ui.practice;
+  if(p.phase==='settings'){
+    const poolCount = (() => {
+      let list = cardsOf(p.domain);
+      if(p.scope==='weak') list = list.filter(c=>c.familiarity!=='familiar');
+      else if(p.scope==='unfamiliar') list = list.filter(c=>c.familiarity==='unfamiliar');
+      return list.length;
+    })();
+    return `
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">練習背誦</h1>
+          <p class="view-desc">翻卡確認定義,標記熟悉程度來追蹤進度</p>
+        </div>
+      </div>
+      <div class="practice-wrap">
+        <div class="settings-panel">
+          <div class="settings-grid">
+            <div class="form-row">
+              <label>領域</label>
+              <select id="p-domain">
+                <option value="all" ${p.domain==='all'?'selected':''}>全部領域</option>
+                ${state.domains.map(d=>`<option value="${d.id}" ${p.domain===d.id?'selected':''}>${esc(d.name)}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-row">
+              <label>範圍</label>
+              <select id="p-scope">
+                <option value="all" ${p.scope==='all'?'selected':''}>全部字卡</option>
+                <option value="weak" ${p.scope==='weak'?'selected':''}>待加強(不熟悉+未練習)</option>
+                <option value="unfamiliar" ${p.scope==='unfamiliar'?'selected':''}>只練不熟悉</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>順序</label>
+              <select id="p-order">
+                <option value="random" ${p.order==='random'?'selected':''}>隨機</option>
+                <option value="sequential" ${p.order==='sequential'?'selected':''}>依序</option>
+              </select>
+            </div>
+          </div>
+          <p class="pool-hint">目前篩選條件下共有 <b>${poolCount}</b> 張字卡。</p>
+          <button class="btn btn-primary" id="btn-start-practice" ${poolCount===0?'disabled':''}>${ICONS.practice}開始練習</button>
+        </div>
+      </div>
+    `;
+  }
+
+  if(p.phase==='session'){
+    const total = p.queue.length;
+    const idx = p.index;
+    const cardId = p.queue[idx];
+    const card = state.cards.find(c=>c.id===cardId);
+    if(!card){ p.phase='summary'; return viewPractice(); }
+    const accent = domainAccent(card.domain);
+    const circumference = 2*Math.PI*26;
+    const progressFrac = idx/total;
+    const dashOffset = circumference * (1-progressFrac);
+
+    return `
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">練習背誦</h1>
+          <p class="view-desc">${esc(domainName(card.domain))}</p>
+        </div>
+      </div>
+      <div class="practice-wrap">
+        <div class="session-top">
+          <div class="progress-ring-wrap">
+            <svg width="60" height="60" viewBox="0 0 60 60">
+              <circle cx="30" cy="30" r="26" fill="none" stroke="var(--line)" stroke-width="5"/>
+              <circle cx="30" cy="30" r="26" fill="none" stroke="var(--accent-${accent})" stroke-width="5"
+                stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${dashOffset}"
+                transform="rotate(-90 30 30)"/>
+            </svg>
+            <div class="progress-text">${idx+1} / ${total}<br><small>目前進度</small></div>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-abort-practice">結束練習</button>
+        </div>
+
+        <div class="flip-stage">
+          <div class="flashcard ${p.flipped?'flipped':''}" id="flashcard-el">
+            <div class="face face-front">
+              <div class="face-tab" style="background:var(--accent-${accent})"></div>
+              <div class="face-label">${esc(domainName(card.domain))}</div>
+              <div class="face-term">${esc(card.term)}</div>
+            </div>
+            <div class="face face-back">
+              <div class="face-tab" style="background:var(--accent-${accent})"></div>
+              <div class="face-label">解釋</div>
+              <div class="face-def">${esc(card.definition)}</div>
+            </div>
+          </div>
+        </div>
+
+        ${!p.flipped ? `
+          <p class="flip-hint">點擊卡片查看解釋</p>
+        ` : `
+          <div class="judge-row">
+            <button class="btn judge-btn judge-bad" id="btn-judge-bad">${ICONS.x}還不熟悉</button>
+            <button class="btn judge-btn judge-good" id="btn-judge-good">${ICONS.check}我記住了</button>
+          </div>
+        `}
+        <div class="session-end-link"><button id="btn-skip-card">跳過這張,不列入紀錄</button></div>
+      </div>
+    `;
+  }
+
+  // summary
+  const s = p.stats;
+  return `
+    <div class="view-header">
+      <div>
+        <h1 class="view-title">練習背誦</h1>
+        <p class="view-desc">本次練習結果</p>
+      </div>
+    </div>
+    <div class="practice-wrap">
+      <div class="summary-box">
+        <h2 class="serif">練習完成</h2>
+        <div class="summary-stats">
+          <div><div class="n" style="color:var(--good)">${s.familiar}</div><div class="l">記住了</div></div>
+          <div><div class="n" style="color:var(--bad)">${s.unfamiliar}</div><div class="l">還不熟悉</div></div>
+          <div><div class="n" style="color:var(--ink-faint)">${s.skipped}</div><div class="l">跳過</div></div>
+        </div>
+        <div class="summary-actions">
+          <button class="btn btn-primary" id="btn-restart-practice">${ICONS.practice}再練一次</button>
+          <button class="btn btn-ghost" id="btn-back-to-settings">調整篩選</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   NOTES
+============================================================ */
+function viewNotes(){
+  if(!ui.notesDomain && state.domains.length) ui.notesDomain = state.domains[0].id;
+  const domainId = ui.notesDomain;
+  const notes = state.notes.filter(n=>n.domain===domainId).sort((a,b)=>a.order-b.order);
+  const editing = ui.editingNoteId ? state.notes.find(n=>n.id===ui.editingNoteId) : null;
+
+  return `
+    <div class="view-header">
+      <div>
+        <h1 class="view-title">知識脈絡筆記</h1>
+        <p class="view-desc">整理每個領域會教到的內容,建立你的教學脈絡地圖</p>
+      </div>
+      ${(!ui.notesFormOpen && !editing && state.domains.length) ? `<button class="btn btn-primary" id="btn-open-add-note">${ICONS.plus}新增段落</button>` : ''}
+    </div>
+
+    ${state.domains.length ? `
+      <div class="domain-chip-row">
+        ${state.domains.map(d=>`
+          <button class="domain-chip" data-notes-domain="${d.id}"
+            style="${ui.notesDomain===d.id ? `background:var(--accent-${d.accent});color:#fff;border-color:var(--accent-${d.accent})` : ''}">
+            ${esc(d.name)}
+          </button>`).join('')}
+      </div>
+    ` : ''}
+
+    ${(ui.notesFormOpen || editing) ? noteForm(editing) : ''}
+
+    ${!state.domains.length ? `
+      <div class="empty-state"><h3>還沒有領域</h3><p>請先到儀表板新增領域。</p></div>
+    ` : notes.length ? `<div class="note-list">${notes.map(noteCard).join('')}</div>` : `
+      <div class="empty-state">
+        <h3>還沒有整理這個領域的教學脈絡</h3>
+        <p>新增第一個主題,例如「兒童動作發展分期」或「食物中毒的分類與預防」。</p>
+      </div>
+    `}
+  `;
+}
+
+function noteToEditableHtml(content){
+  if(!content) return '';
+  // 已經是 HTML(含標籤)就直接沿用,否則把舊的純文字筆記轉成帶換行的 HTML
+  if(/<[a-z][\s\S]*>/i.test(content)) return content;
+  return esc(content).replace(/\n/g,'<br>');
+}
+
+function noteForm(editing){
+  const initialHtml = editing ? noteToEditableHtml(editing.content) : '';
+  return `
+    <div class="form-panel">
+      <div class="form-row">
+        <label>主題標題</label>
+        <input type="text" id="note-title" placeholder="例如:嬰幼兒動作發展分期" value="${editing?esc(editing.title):''}">
+      </div>
+      <div class="form-row">
+        <label>內容(可整理重點條列、架構、考點脈絡)</label>
+        <div class="rt-toolbar">
+          <button type="button" class="rt-btn" style="font-weight:900" data-rt-cmd="bold">粗體</button>
+          <button type="button" class="rt-btn" style="text-decoration:underline" data-rt-cmd="underline">底線</button>
+          <button type="button" class="rt-btn" id="rt-clear">清除格式</button>
+          <button type="button" class="rt-btn" data-rt-cmd="insertUnorderedList">• 項目清單</button>
+          <button type="button" class="rt-btn" data-rt-cmd="insertOrderedList">1. 編號清單</button>
+          <button type="button" class="rt-btn" id="rt-image">🖼 插入圖片</button>
+        </div>
+        <div class="rt-editable" id="note-content-editable" contenteditable="true"
+          data-placeholder="輸入這個主題的重點整理,可以加粗體、底線,貼上網址會自動變成可點的連結...">${initialHtml}</div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-save-note">${ICONS.check}${editing?'儲存修改':'新增段落'}</button>
+        <button class="btn btn-ghost" id="btn-cancel-note">取消</button>
+      </div>
+    </div>
+  `;
+}
+
+function noteCard(n){
+  const open = ui.editingNoteId==='view-'+n.id;
+  return `
+    <div class="note-card ${open?'open':''}" data-note-card="${n.id}">
+      <div class="note-head" data-toggle-note="${n.id}">
+        <span class="chevron">${ICONS.chevron}</span>
+        <span class="note-title">${esc(n.title)}</span>
+        <div class="note-order-btns">
+          <button class="icon-btn" data-move-note="${n.id}" data-dir="up">${ICONS.up}</button>
+          <button class="icon-btn" data-move-note="${n.id}" data-dir="down">${ICONS.down}</button>
+        </div>
+      </div>
+      <div class="note-body"><div class="note-body-inner">${withLinkTargets(noteToEditableHtml(n.content))}
+        <div class="note-actions">
+          <button class="btn btn-soft btn-sm" data-edit-note="${n.id}">${ICONS.edit}編輯</button>
+          <button class="btn btn-danger btn-sm" data-del-note="${n.id}">${ICONS.trash}刪除</button>
+        </div>
+      </div></div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   Event binding per view
+============================================================ */
+function bindViewEvents(){
+  if(ui.view==='dashboard') bindDashboardEvents();
+  else if(ui.view==='manage') bindManageEvents();
+  else if(ui.view==='practice') bindPracticeEvents();
+  else if(ui.view==='notes') bindNotesEvents();
+}
+
+function bindDashboardEvents(){
+  const openModal = ()=>{ ui.domainModalOpen = true; renderDomainModal(); };
+  const btn1 = document.getElementById('btn-manage-domains'); if(btn1) btn1.addEventListener('click', openModal);
+  const btn2 = document.getElementById('btn-manage-domains-empty'); if(btn2) btn2.addEventListener('click', openModal);
+
+  document.querySelectorAll('[data-editname]').forEach(el=>{
+    el.addEventListener('click', ()=>{ ui.domainModalOpen = true; renderDomainModal(); });
+  });
+  document.querySelectorAll('[data-go-practice]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      ui.practice.domain = btn.getAttribute('data-go-practice');
+      ui.practice.phase = 'settings';
+      switchView('practice');
+    });
+  });
+  document.querySelectorAll('[data-go-notes]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      ui.notesDomain = btn.getAttribute('data-go-notes');
+      switchView('notes');
+    });
+  });
+}
+
+function bindManageEvents(){
+  const openBtn = document.getElementById('btn-open-add-card'); if(openBtn) openBtn.addEventListener('click', ()=>{ ui.manageFormOpen=true; ui.editingCardId=null; renderView(); });
+  const openBtn2 = document.getElementById('btn-open-add-card-empty'); if(openBtn2) openBtn2.addEventListener('click', ()=>{ ui.manageFormOpen=true; ui.editingCardId=null; renderView(); });
+  const cancel = document.getElementById('btn-cancel-card'); if(cancel) cancel.addEventListener('click', ()=>{ ui.manageFormOpen=false; ui.editingCardId=null; renderView(); });
+
+  const save = document.getElementById('btn-save-card');
+  if(save) save.addEventListener('click', ()=>{
+    const domain = document.getElementById('form-domain').value;
+    const term = document.getElementById('form-term').value.trim();
+    const def = document.getElementById('form-def').value.trim();
+    if(!term || !def){ showToast('請輸入名詞與解釋'); return; }
+    if(ui.editingCardId){
+      const c = state.cards.find(x=>x.id===ui.editingCardId);
+      c.domain = domain || null; c.term = term; c.definition = def;
+      showToast('已儲存修改');
+    }else{
+      state.cards.push({ id: uid('c'), domain: domain||null, term, definition: def, familiarity:'new' });
+      showToast('已新增字卡');
+    }
+    ui.manageFormOpen=false; ui.editingCardId=null;
+    persist(); renderView();
+  });
+
+  document.querySelectorAll('[data-filter-domain]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ ui.manageFilterDomain = btn.getAttribute('data-filter-domain'); renderView(); });
+  });
+  const search = document.getElementById('manage-search');
+  if(search){
+    search.addEventListener('input', ()=>{ ui.manageSearch = search.value; renderView(); search.focus(); search.selectionStart = search.selectionEnd = search.value.length; });
+  }
+  document.querySelectorAll('[data-toggle-card]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const id = el.getAttribute('data-toggle-card');
+      const wasOpen = ui.expandedCardId===id;
+      document.querySelectorAll('.card-row.expanded').forEach(r=> r.classList.remove('expanded'));
+      ui.expandedCardId = wasOpen ? null : id;
+      if(!wasOpen){
+        const row = document.querySelector(`[data-card-row="${id}"]`);
+        if(row) row.classList.add('expanded');
+      }
+    });
+  });
+  document.querySelectorAll('[data-edit-card]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{ e.stopPropagation(); ui.editingCardId = btn.getAttribute('data-edit-card'); ui.manageFormOpen=false; renderView(); window.scrollTo({top:0,behavior:'smooth'}); });
+  });
+  document.querySelectorAll('[data-del-card]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id = btn.getAttribute('data-del-card');
+      const c = state.cards.find(x=>x.id===id);
+      showConfirmModal(`確定要刪除字卡「${c.term}」嗎?刪除後無法復原。`, true, ()=>{
+        state.cards = state.cards.filter(x=>x.id!==id);
+        persist('已刪除字卡'); renderView();
+      });
+    });
+  });
+}
+
+function bindPracticeEvents(){
+  const p = ui.practice;
+  if(p.phase==='settings'){
+    const dSel = document.getElementById('p-domain'); if(dSel) dSel.addEventListener('change', ()=>{ p.domain=dSel.value; renderView(); });
+    const sSel = document.getElementById('p-scope'); if(sSel) sSel.addEventListener('change', ()=>{ p.scope=sSel.value; renderView(); });
+    const oSel = document.getElementById('p-order'); if(oSel) oSel.addEventListener('change', ()=>{ p.order=oSel.value; });
+    const start = document.getElementById('btn-start-practice');
+    if(start) start.addEventListener('click', ()=>{
+      p.queue = buildQueue();
+      p.index = 0; p.flipped = false;
+      p.stats = { familiar:0, unfamiliar:0, skipped:0 };
+      p.phase = 'session';
+      renderView();
+    });
+  }else if(p.phase==='session'){
+    const flashcard = document.getElementById('flashcard-el');
+    if(flashcard) flashcard.addEventListener('click', ()=>{ p.flipped = !p.flipped; renderView(); });
+    const abort = document.getElementById('btn-abort-practice');
+    if(abort) abort.addEventListener('click', ()=>{ p.phase='settings'; renderView(); });
+    const badBtn = document.getElementById('btn-judge-bad');
+    if(badBtn) badBtn.addEventListener('click', ()=> judgeCard('unfamiliar'));
+    const goodBtn = document.getElementById('btn-judge-good');
+    if(goodBtn) goodBtn.addEventListener('click', ()=> judgeCard('familiar'));
+    const skipBtn = document.getElementById('btn-skip-card');
+    if(skipBtn) skipBtn.addEventListener('click', ()=>{ p.stats.skipped++; advanceCard(); });
+  }else{
+    const restart = document.getElementById('btn-restart-practice');
+    if(restart) restart.addEventListener('click', ()=>{
+      p.queue = buildQueue(); p.index=0; p.flipped=false;
+      p.stats = { familiar:0, unfamiliar:0, skipped:0 };
+      p.phase='session'; renderView();
+    });
+    const back = document.getElementById('btn-back-to-settings');
+    if(back) back.addEventListener('click', ()=>{ p.phase='settings'; renderView(); });
+  }
+}
+function judgeCard(fam){
+  const p = ui.practice;
+  const cardId = p.queue[p.index];
+  const card = state.cards.find(c=>c.id===cardId);
+  if(card){ card.familiarity = fam; p.stats[fam]++; persist(); }
+  advanceCard();
+}
+function advanceCard(){
+  const p = ui.practice;
+  p.flipped = false;
+  if(p.index+1 >= p.queue.length){ p.phase='summary'; }
+  else{ p.index++; }
+  renderView();
+}
+
+function bindRichTextToolbar(){
+  const editable = document.getElementById('note-content-editable');
+  if(!editable) return;
+
+  document.querySelectorAll('[data-rt-cmd]').forEach(btn=>{
+    btn.addEventListener('mousedown', (e)=> e.preventDefault()); // 避免按按鈕時編輯區失焦、選取範圍消失
+    btn.addEventListener('click', ()=>{
+      editable.focus();
+      document.execCommand(btn.getAttribute('data-rt-cmd'), false, null);
+    });
+  });
+
+  const clearBtn = document.getElementById('rt-clear');
+  if(clearBtn){
+    clearBtn.addEventListener('mousedown', (e)=> e.preventDefault());
+    clearBtn.addEventListener('click', ()=>{ editable.focus(); document.execCommand('removeFormat'); });
+  }
+
+  const imageBtn = document.getElementById('rt-image');
+  if(imageBtn){
+    imageBtn.addEventListener('mousedown', (e)=> e.preventDefault());
+    imageBtn.addEventListener('click', ()=>{
+      showPromptModal('輸入圖片網址', 'https://example.com/photo.jpg', (url)=>{
+        editable.focus();
+        document.execCommand('insertImage', false, url.trim());
+      });
+    });
+  }
+
+  // 貼上網址時,直接自動變成可點擊開啟的連結;貼上其他內容一律以純文字處理,避免帶入外部格式造成卡頓
+  editable.addEventListener('paste', (e)=>{
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+    if(!text) return;
+    document.execCommand('insertHTML', false, linkifyPlainText(text));
+  });
+}
+
+/* 把純文字中的網址轉成可點擊的連結,其餘文字照常逸出並保留換行 */
+function linkifyPlainText(text){
+  const escaped = esc(text).replace(/\r\n|\r|\n/g, '<br>');
+  return escaped.replace(/((https?:\/\/|www\.)[^\s<]+)/gi, (match)=>{
+    let display = match;
+    let trail = '';
+    const trailMatch = display.match(/[.,;:!?)\]]+$/);
+    if(trailMatch){ trail = trailMatch[0]; display = display.slice(0, -trail.length); }
+    const href = /^https?:\/\//i.test(display) ? display : 'https://' + display;
+    return `<a href="${href.replace(/"/g,'&quot;')}">${display}</a>${trail}`;
+  });
+}
+
+function bindNotesEvents(){
+  document.querySelectorAll('[data-notes-domain]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ ui.notesDomain = btn.getAttribute('data-notes-domain'); ui.notesFormOpen=false; ui.editingNoteId=null; renderView(); });
+  });
+  const openBtn = document.getElementById('btn-open-add-note'); if(openBtn) openBtn.addEventListener('click', ()=>{ ui.notesFormOpen=true; ui.editingNoteId=null; renderView(); });
+  const cancel = document.getElementById('btn-cancel-note'); if(cancel) cancel.addEventListener('click', ()=>{ ui.notesFormOpen=false; ui.editingNoteId=null; renderView(); });
+
+  bindRichTextToolbar();
+
+  const save = document.getElementById('btn-save-note');
+  if(save) save.addEventListener('click', ()=>{
+    const title = document.getElementById('note-title').value.trim();
+    const editableEl = document.getElementById('note-content-editable');
+    const content = sanitizeHtml(editableEl ? editableEl.innerHTML : '');
+    const isEmpty = !editableEl || !editableEl.textContent.trim();
+    if(!title){ showToast('請輸入主題標題'); return; }
+    const isEditingReal = ui.editingNoteId && !String(ui.editingNoteId).startsWith('view-');
+    if(isEditingReal){
+      const n = state.notes.find(x=>x.id===ui.editingNoteId);
+      n.title = title; n.content = isEmpty ? '' : content;
+      showToast('已儲存修改');
+    }else{
+      const maxOrder = Math.max(0, ...state.notes.filter(n=>n.domain===ui.notesDomain).map(n=>n.order));
+      state.notes.push({ id: uid('n'), domain: ui.notesDomain, title, content: isEmpty ? '' : content, order: maxOrder+1 });
+      showToast('已新增段落');
+    }
+    ui.notesFormOpen=false; ui.editingNoteId=null;
+    persist(); renderView();
+  });
+
+  document.querySelectorAll('[data-toggle-note]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('[data-move-note]')) return;
+      const id = el.getAttribute('data-toggle-note');
+      const key = 'view-'+id;
+      const card = document.querySelector(`[data-note-card="${id}"]`);
+      const wasOpen = ui.editingNoteId===key;
+      if(card) card.classList.toggle('open', !wasOpen);
+      ui.editingNoteId = wasOpen ? null : key;
+    });
+  });
+  document.querySelectorAll('[data-edit-note]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{ e.stopPropagation(); ui.editingNoteId = btn.getAttribute('data-edit-note'); ui.notesFormOpen=false; renderView(); });
+  });
+  document.querySelectorAll('[data-del-note]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id = btn.getAttribute('data-del-note');
+      const n = state.notes.find(x=>x.id===id);
+      showConfirmModal(`確定要刪除「${n.title}」這個段落嗎?刪除後無法復原。`, true, ()=>{
+        state.notes = state.notes.filter(x=>x.id!==id);
+        persist('已刪除段落'); renderView();
+      });
+    });
+  });
+  document.querySelectorAll('[data-move-note]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id = btn.getAttribute('data-move-note');
+      const dir = btn.getAttribute('data-dir');
+      const list = state.notes.filter(n=>n.domain===ui.notesDomain).sort((a,b)=>a.order-b.order);
+      const idx = list.findIndex(n=>n.id===id);
+      const swapIdx = dir==='up' ? idx-1 : idx+1;
+      if(swapIdx<0 || swapIdx>=list.length) return;
+      const a = list[idx], b = list[swapIdx];
+      const tmp = a.order; a.order = b.order; b.order = tmp;
+      persist(); renderView();
+    });
+  });
+}
+
+/* ============================================================
+   Init
+   注意:這裡不再於檔案載入時自動執行,
+   而是改由上方 onAuthStateChanged 確認登入成功後呼叫 initApp()
+============================================================ */
+async function initApp(){
+  document.getElementById('app').innerHTML = `
+    <div class="loading-screen">
+      <div class="spin"></div>
+      <div>正在載入你的資料...</div>
+    </div>`;
+  try{
+    state = await loadData();
+    render();
+  }catch(e){
+    console.error('初始化畫面時發生錯誤', e);
+    document.getElementById('app').innerHTML = `
+      <div class="loading-screen">
+        <div style="color:var(--bad); font-weight:700;">畫面載入失敗</div>
+        <div>請確認網路連線,或按下方按鈕重試。</div>
+        <div style="font-size:11px; color:var(--ink-faint); max-width:480px; text-align:center; word-break:break-word;">
+          錯誤訊息:${esc((e && (e.code || e.message)) ? (e.code || '') + ' ' + (e.message || '') : String(e))}
+        </div>
+        <button class="btn btn-primary" onclick="location.reload()">重新整理</button>
+      </div>`;
+    return;
+  }
+  // 讀取/畫面渲染都成功後,才掛上即時監聽;監聽本身若權限有問題不會擋住畫面顯示,只會在主控台顯示警告
+  try{
+    attachRealtimeListener();
+  }catch(e){
+    console.error('掛上即時監聽時發生錯誤', e);
+  }
+}
+</script>
+</body>
+
+</html>
